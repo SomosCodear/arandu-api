@@ -6,6 +6,7 @@ import configs from './configs';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DBModule } from './db/db.module';
+import { CFPModule } from './cfp/cfp.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { DBModule } from './db/db.module';
     }),
     ConsoleModule,
     DBModule,
+    CFPModule,
   ],
   controllers: [AppController],
   providers: [AppService],

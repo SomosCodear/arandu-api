@@ -3,7 +3,9 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { CFPEntity } from 'src/cfp/cfp.entity';
 
 @Entity({
   name: 'teams',
@@ -26,4 +28,7 @@ export class TeamEntity {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToMany(() => CFPEntity, (cfp) => cfp.team)
+  cfps: CFPEntity[];
 }
