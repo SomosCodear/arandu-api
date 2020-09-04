@@ -1,0 +1,27 @@
+[{
+    "id": "ab4d114f-2f0a-4cb4-b487-cb9146a6f66b",
+    "cfp": "0402bad9-436a-445a-800d-207f106ebf75",
+    "type": "title",
+    "name": "form-title",
+    "value": "¡Comparti tus conocimientos!",
+    "order": 1
+  },
+  {
+    "id": "ffdcbdfb-741a-40d9-b446-aab82616b1b5",
+    "cfp": "0402bad9-436a-445a-800d-207f106ebf75",
+    "type": "input",
+    "name": "title",
+    "title": "Título de tu charla",
+    "hint": "Pensa algo que le pueda llamar la atención al publico",
+    "order": 2
+  },
+  {
+    "id": "e5325d82-8bda-478a-acc5-2457c981ad42",
+    "cfp": "0402bad9-436a-445a-800d-207f106ebf75",
+    "type": "select",
+    "name": "category",
+    "title": "Categoría",
+    "description": "La catgoría se usara para indexar la charla en algún lado",
+    "order": 3
+  }
+]

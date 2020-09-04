@@ -1,0 +1,22 @@
+[{
+    "id": "0eb5cf4e-b941-4de0-b316-9a6af6b75f50",
+    "field": "e5325d82-8bda-478a-acc5-2457c981ad42",
+    "title": "Tecnología",
+    "value": "tech",
+    "order": 1
+  },
+  {
+    "id": "2f95e80a-f871-4a89-94e8-3dc2f3660df4",
+    "field": "e5325d82-8bda-478a-acc5-2457c981ad42",
+    "title": "Emprendedurismo",
+    "value": "entrepreneurship",
+    "order": 2
+  },
+  {
+    "id": "970d706d-1db7-4f25-86e5-be13bcdd9e29",
+    "field": "e5325d82-8bda-478a-acc5-2457c981ad42",
+    "title": "Educación",
+    "value": "education",
+    "order": 3
+  }
+]

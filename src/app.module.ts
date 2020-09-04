@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConsoleModule } from 'nestjs-console';
 import configs from './configs';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { DBModule } from './db/db.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { AppService } from './app.service';
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => config.get('typeorm'),
     }),
+    ConsoleModule,
+    DBModule,
   ],
   controllers: [AppController],
   providers: [AppService],
