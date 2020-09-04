@@ -1,5 +1,6 @@
 import { registerAs } from '@nestjs/config';
 import { ConnectionOptions } from 'typeorm';
+import { TeamEntity } from 'src/team/team.entity';
 
 export const typeORMConfig = registerAs(
   'typeorm',
@@ -12,6 +13,6 @@ export const typeORMConfig = registerAs(
       password: process.env.DB_PASSWORD || '',
       database: process.env.DB_NAME || 'arandu',
       logging: process.env.DB_LOGGING === 'true',
-      entities: [],
+      entities: [TeamEntity],
     },
 );
