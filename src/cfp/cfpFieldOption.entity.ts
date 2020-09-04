@@ -20,7 +20,7 @@ export class CFPFieldOptionEntity {
   @Column({ default: '' })
   description: string;
 
-  @Column({ type: 'numeric' })
+  @Column({ type: 'integer' })
   order: number;
 
   @ManyToOne(() => CFPFieldEntity, (field) => field.options, {

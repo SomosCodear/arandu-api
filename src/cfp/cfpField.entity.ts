@@ -36,7 +36,7 @@ export class CFPFieldEntity {
   @Column({ type: 'text', default: '' })
   description: string;
 
-  @Column({ type: 'numeric' })
+  @Column({ type: 'integer' })
   order: number;
 
   @ManyToOne(() => CFPEntity, (cfp) => cfp.fields, { onDelete: 'CASCADE' })
