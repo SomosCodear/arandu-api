@@ -27,9 +27,6 @@ export class CFPFieldEntity {
   @Column({ default: '' })
   title: string;
 
-  @Column({ default: '' })
-  value: string;
-
   @Column({ type: 'text', default: '' })
   hint: string;
 
