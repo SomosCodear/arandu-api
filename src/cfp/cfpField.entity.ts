@@ -1,3 +1,4 @@
+import * as Joi from 'joi';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -15,6 +16,14 @@ import { CFPFieldOptionEntity } from './cfpFieldOption.entity';
   },
 })
 export class CFPFieldEntity {
+  static updateValidationSchema = Joi.object({
+    type: Joi.string(),
+    name: Joi.string(),
+    title: Joi.string(),
+    hint: Joi.string(),
+    description: Joi.string(),
+  });
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
