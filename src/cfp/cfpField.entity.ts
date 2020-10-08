@@ -16,12 +16,22 @@ import { CFPFieldOptionEntity } from './cfpFieldOption.entity';
   },
 })
 export class CFPFieldEntity {
+  static creationValidationSchema = Joi.object({
+    type: Joi.string().required(),
+    name: Joi.string().required(),
+    title: Joi.string().required(),
+    hint: Joi.string(),
+    description: Joi.string(),
+    order: Joi.number().required(),
+  });
+
   static updateValidationSchema = Joi.object({
     type: Joi.string(),
     name: Joi.string(),
     title: Joi.string(),
     hint: Joi.string(),
     description: Joi.string(),
+    order: Joi.number(),
   });
 
   @PrimaryGeneratedColumn('uuid')

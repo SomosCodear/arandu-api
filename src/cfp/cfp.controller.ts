@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Patch, Body, UsePipes } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Body,
+  UsePipes,
+  Post,
+} from '@nestjs/common';
 import { CFP } from './cfp.service';
 import { CFPFieldDTO } from './cfpField.dto';
 import { ValidationPipe } from '../commons/validation.pipe';
@@ -11,6 +19,20 @@ export class CFPController {
   getCFPById(@Param('slug') slug: string) {
     return this.cfp.getBySlug(slug);
   }
+  @Post(':slug/field')
+  @UsePipes(new ValidationPipe(CFPFieldEntity.creationValidationSchema))
+  async createField(
+    @Body() fieldData: CFPFieldDTO,
+    @Param('slug') slug: string,
+  ) {
+    const cfp = await this.cfp.getBySlug(slug, true, false);
+
+    return this.cfp.createField({
+      ...fieldData,
+      cfp,
+    });
+  }
+
   @Patch(':slug/field/:fieldId')
   @UsePipes(new ValidationPipe(CFPFieldEntity.updateValidationSchema))
   async updateField(
