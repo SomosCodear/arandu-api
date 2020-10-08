@@ -42,14 +42,13 @@ export class CFP {
     }
 
     const updateOrder = data.order && data.order !== field.order;
-    console.log('UPDATE ORDER', updateOrder, data.order, field.order);
+
     const updated = await this.cfpFieldRepository.save({
       ...field,
       ...data,
     });
 
     if (updateOrder) {
-      console.log('RUNNING UPDTE');
       await this.updateFieldOrder(updated);
     }
 
@@ -76,7 +75,6 @@ export class CFP {
     field: CFPFieldEntity,
     deleting = false,
   ): Promise<void> {
-    console.log('UPDATE', field.id, 'WITH', field.order);
     const fields = await this.cfpFieldRepository.find({
       where: {
         cfp: field.cfp,
@@ -86,6 +84,21 @@ export class CFP {
         order: 'ASC',
       },
     });
+
+    if (!fields.length) return;
+    const lastField = fields[fields.length - 1];
+    if (lastField.order === fields.length) {
+      const newLastOrder = lastField.order + 1;
+      if (field.order === newLastOrder) return;
+      if (field.order > newLastOrder) {
+        field.order = newLastOrder;
+        await this.cfpFieldRepository.save(field);
+        return;
+      }
+    } else {
+      field.order = lastField.order;
+      await this.cfpFieldRepository.save(field);
+    }
 
     let increment = 0;
     const incrementValue = deleting ? 0 : 1;
