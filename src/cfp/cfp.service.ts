@@ -61,7 +61,22 @@ export class CFP {
     return field;
   }
 
-  async updateFieldOrder(field: CFPFieldEntity): Promise<void> {
+  async deleteField(fieldId: string): Promise<CFPFieldEntity> {
+    const field = await this.cfpFieldRepository.findOne({
+      where: { id: fieldId },
+      relations: ['cfp'],
+    });
+
+    await this.updateFieldOrder(field, true);
+    await this.cfpFieldRepository.delete(field);
+    return field;
+  }
+
+  async updateFieldOrder(
+    field: CFPFieldEntity,
+    deleting = false,
+  ): Promise<void> {
+    console.log('UPDATE', field.id, 'WITH', field.order);
     const fields = await this.cfpFieldRepository.find({
       where: {
         cfp: field.cfp,
@@ -73,6 +88,7 @@ export class CFP {
     });
 
     let increment = 0;
+    const incrementValue = deleting ? 0 : 1;
     await Promise.all(
       fields.reduce(
         (
@@ -80,14 +96,17 @@ export class CFP {
           item: CFPFieldEntity,
           index: number,
         ): Promise<CFPFieldEntity>[] => {
-          if (!index && item.order !== 1) {
-            increment = -1;
-          } else if (index + 1 === field.order) {
-            increment = 1;
+          let newOrder = index + 1;
+          if (newOrder === field.order) {
+            increment = incrementValue;
           }
 
           if (increment) {
-            item.order += increment;
+            newOrder += increment;
+          }
+
+          if (item.order !== newOrder) {
+            item.order = newOrder;
             return [...acc, this.cfpFieldRepository.save(item)];
           }
 

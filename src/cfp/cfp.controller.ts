@@ -6,6 +6,7 @@ import {
   Body,
   UsePipes,
   Post,
+  Delete,
 } from '@nestjs/common';
 import { CFP } from './cfp.service';
 import { CFPFieldDTO } from './cfpField.dto';
@@ -26,7 +27,6 @@ export class CFPController {
     @Param('slug') slug: string,
   ) {
     const cfp = await this.cfp.getBySlug(slug, true, false);
-
     return this.cfp.createField({
       ...fieldData,
       cfp,
@@ -45,5 +45,14 @@ export class CFPController {
      */
     await this.cfp.getBySlug(slug);
     return this.cfp.updateField(fieldId, fieldData);
+  }
+
+  @Delete(':slug/field/:fieldId')
+  async deleteField(
+    @Param('slug') slug: string,
+    @Param('fieldId') fieldId: string,
+  ) {
+    await this.cfp.getBySlug(slug);
+    return this.cfp.deleteField(fieldId);
   }
 }
