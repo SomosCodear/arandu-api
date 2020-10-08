@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "41540e03-6138-481e-814d-be29a86a4724",
+		"name": "Arandu API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CFP: Fields",
+			"item": [
+				{
+					"name": "CFP: Fields: Update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order\": 20\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/cfps/:slug/field/:fieldId",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"cfps",
+								":slug",
+								"field",
+								":fieldId"
+							],
+							"variable": [
+								{
+									"key": "slug",
+									"value": "encuentros-codear"
+								},
+								{
+									"key": "fieldId",
+									"value": "7be0b6ca-c4e4-4b37-9508-8826caebf858"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CFP: Fields: Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"input\",\n    \"name\": \"title\",\n    \"title\": \"Something\",\n    \"order\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/cfps/:slug/field/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"cfps",
+								":slug",
+								"field",
+								""
+							],
+							"variable": [
+								{
+									"key": "slug",
+									"value": "encuentros-codear"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CFP: Fields: Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/cfps/:slug/field/:fieldId",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"cfps",
+								":slug",
+								"field",
+								":fieldId"
+							],
+							"variable": [
+								{
+									"key": "slug",
+									"value": "encuentros-codear"
+								},
+								{
+									"key": "fieldId",
+									"value": "d4a417e6-3dcf-4121-b4d4-b6e661a2d14f"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e80e72d8-56c4-4616-bcfe-c2f9a7266904",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0154f9c0-4d09-4dcd-b3a6-42dada3c2f7b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "269afd5c-07c9-4e5c-a894-9223e13f9b91",
+			"key": "API_URL",
+			"value": "http://localhost:2509"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
