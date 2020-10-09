@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"order\": 20\n}",
+							"raw": "{\n    \"field\": {\n        \"order\": 2\n    },\n    \"options\": [\n        {\n            \"value\": \"B\",\n            \"title\": \"Option B\",\n            \"order\": 2\n        },\n        {\n            \"value\": \"A\",\n            \"title\": \"Option A\",\n            \"order\": 1\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -40,7 +40,7 @@
 								},
 								{
 									"key": "fieldId",
-									"value": "7be0b6ca-c4e4-4b37-9508-8826caebf858"
+									"value": "c3706922-5592-4c6d-a9f8-c8c4db10066a"
 								}
 							]
 						}
@@ -54,7 +54,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"type\": \"input\",\n    \"name\": \"title\",\n    \"title\": \"Something\",\n    \"order\": 10\n}",
+							"raw": "{\n    \"field\": {\n        \"type\": \"select\",\n        \"name\": \"opts\",\n        \"title\": \"Options\",\n        \"order\": 10\n    },\n    \"options\": [\n        {\n            \"value\": \"A\",\n            \"title\": \"Option A\",\n            \"order\": 1\n        },\n        {\n            \"value\": \"B\",\n            \"title\": \"Option B\",\n            \"order\": 2\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -105,7 +105,7 @@
 								},
 								{
 									"key": "fieldId",
-									"value": "d4a417e6-3dcf-4121-b4d4-b6e661a2d14f"
+									"value": "c3706922-5592-4c6d-a9f8-c8c4db10066a"
 								}
 							]
 						}
@@ -140,7 +140,7 @@
 	],
 	"variable": [
 		{
-			"id": "269afd5c-07c9-4e5c-a894-9223e13f9b91",
+			"id": "406d8610-d8a3-41bc-9c0e-d3647bbb012f",
 			"key": "API_URL",
 			"value": "http://localhost:2509"
 		}
