@@ -1,75 +1,70 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Arandu API [WIP]
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This is the backend for the application that manages events' CFPs
 
-## Description
+## Local setup
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### 1. Node && dependencies
 
-## Installation
+The project uses Node 12 or above, and you can either install it manually or use [nvm](https://github.com/nvm-sh/nvm) as there's a `.nvmrc` file.
 
-```bash
-$ npm install
+You can use either `Yarn` or `NPM` for the dependencies, but have in mind that we use `Yarn`, so if you are planning on changing dependencies, you'll probably want to use it too.
+
+```sh
+yarn
+#OR npm i
 ```
 
-## Running the app
+### 2. Database && ENV
 
-```bash
-# development
-$ npm run start
+The API uses a PostgreSQL database, and you can setup it manually or use the `docker-compose.yml` on the repository.
 
-# watch mode
-$ npm run start:dev
+There's an `.env.example` file you can copy with the variables ready for Docker database, but if you are going with the manual approach, you can't remove the variables above the `# API` comment.
 
-# production mode
-$ npm run start:prod
+In any case, here's a reference table for the variables:
+
+| Var | Default value |
+| --- | ------------- |
+| `DB_HOST` | `127.0.0.1` |
+| `DB_PORT` | `5432` |
+| `DB_USERNAME` | `root` |
+| `DB_PASSWORD` | - |
+| `DB_NAME` | `arandu` |
+| `DB_LOGGING` | - |
+
+> `DB_LOGGING` is a _"boolean"_, if `true`, it will print the queries on the terminal.
+
+### 3. Database && setup
+
+Once the variables for the database connection are ready, you can use the DB CLI commands in order to create the tables and add some dummy data.
+
+```sh
+yarn cli:dev db --help
+# OR npm run yarn cli:dev db --help
 ```
 
-## Test
+There you'll see the commands for entities synchronization and seeding; you should run both.
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```sh
+yarn cli:dev db sync
+# OR npm run yarn cli:dev db sync
+yarn cli:dev db seed
+# OR npm run yarn cli:dev db seed
 ```
 
-## Support
+### 4. App && Env
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+For now, there's only one variable for the "the application itself", and that's the `PORT`, needed to specify in which HTTP port will the server run.
 
-## Stay in touch
+**Make sure your env has a `PORT` variable**.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 5. Running the application
 
-## License
+```sh
+yarn start:dev
+# OR npm run start:dev
+```
 
-  Nest is [MIT licensed](LICENSE).
+### 6. Postman collection
+
+On the `/meta` directory you'll find a [Postman](https://www.postman.com/) collection you can import in order to play with some of the endpoints. It only has one variable you have to update and that's the base URL of the API.
