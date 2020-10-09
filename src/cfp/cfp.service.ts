@@ -4,6 +4,9 @@ import { CFPEntity } from './cfp.entity';
 import { Not, Repository } from 'typeorm';
 import { CFPFieldDTO } from './cfpField.dto';
 import { CFPFieldEntity } from './cfpField.entity';
+import { CFPFieldOptionDTO } from './cfpFieldOption.dto';
+import { CFPFieldOptionEntity } from './cfpFieldOption.entity';
+import { Utils } from '../commons/utils.service';
 
 @Injectable()
 export class CFP {
@@ -11,6 +14,9 @@ export class CFP {
     @InjectRepository(CFPEntity) private cfpRepository: Repository<CFPEntity>,
     @InjectRepository(CFPFieldEntity)
     private cfpFieldRepository: Repository<CFPFieldEntity>,
+    @InjectRepository(CFPFieldOptionEntity)
+    private cfpFieldOptionRepository: Repository<CFPFieldOptionEntity>,
+    private utils: Utils,
   ) {}
   async getBySlug(
     slug: string,
@@ -28,19 +34,29 @@ export class CFP {
 
     return result;
   }
+
+  async getFieldById(
+    id: string,
+    failWithError = true,
+    includeRelations = true,
+  ): Promise<CFPFieldEntity> {
+    const result = await this.cfpFieldRepository.findOne({
+      where: { id },
+      relations: includeRelations ? ['cfp', 'options'] : [],
+    });
+
+    if (!result && failWithError) {
+      throw new HttpException('Field not found', HttpStatus.NOT_FOUND);
+    }
+
+    return result;
+  }
   async updateField(
     fieldId: string,
     data: Partial<CFPFieldDTO>,
     failWithError = true,
   ): Promise<CFPFieldEntity> {
-    const field = await this.cfpFieldRepository.findOne({
-      where: { id: fieldId },
-      relations: ['cfp', 'options'],
-    });
-    if (!field && failWithError) {
-      throw new HttpException('Field not found', HttpStatus.NOT_FOUND);
-    }
-
+    const field = await this.getFieldById(fieldId, failWithError);
     const updateOrder = data.order && data.order !== field.order;
 
     const updated = await this.cfpFieldRepository.save({
@@ -56,12 +72,50 @@ export class CFP {
   }
   async createField(data: Required<CFPFieldDTO>): Promise<CFPFieldEntity> {
     const newField = await this.cfpFieldRepository.save(data);
-    const field = await this.cfpFieldRepository.findOne({
-      where: { id: newField.id },
-      relations: ['cfp', 'options'],
-    });
+    const field = await this.getFieldById(newField.id);
     await this.updateFieldOrder(field);
     return field;
+  }
+  async setOptionsForField(
+    field: CFPFieldEntity,
+    data: CFPFieldOptionDTO[],
+  ): Promise<CFPFieldOptionEntity[]> {
+    const useData = data.sort(this.utils.sortObjectsList('order'));
+    const current = await this.cfpFieldOptionRepository.find({
+      where: { field },
+      order: {
+        order: 'ASC',
+      },
+    });
+
+    const options = await Promise.all(
+      useData.reduce(
+        (
+          acc: Promise<CFPFieldOptionEntity>[],
+          item: CFPFieldOptionDTO,
+          index: number,
+        ) => {
+          const newOrder = index + 1;
+          return [
+            ...acc,
+            this.cfpFieldOptionRepository.save({
+              ...(current[index] || { field }),
+              ...item,
+              order: newOrder,
+            }),
+          ];
+        },
+        [],
+      ),
+    );
+    const toDelete = current.slice(useData.length);
+    if (toDelete.length) {
+      await Promise.all(
+        toDelete.map((item) => this.cfpFieldOptionRepository.delete(item)),
+      );
+    }
+
+    return options;
   }
 
   async deleteField(fieldId: string): Promise<CFPFieldEntity> {
@@ -71,11 +125,14 @@ export class CFP {
     });
 
     await this.updateFieldOrder(field, true);
+    await this.cfpFieldOptionRepository.delete({
+      field,
+    });
     await this.cfpFieldRepository.delete(field);
     return field;
   }
 
-  async updateFieldOrder(
+  private async updateFieldOrder(
     field: CFPFieldEntity,
     deleting = false,
   ): Promise<void> {

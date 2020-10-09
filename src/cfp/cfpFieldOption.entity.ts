@@ -1,3 +1,4 @@
+import * as Joi from 'joi';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { CFPFieldEntity } from './cfpField.entity';
 
@@ -8,6 +9,13 @@ import { CFPFieldEntity } from './cfpField.entity';
   },
 })
 export class CFPFieldOptionEntity {
+  static validationSchema = Joi.object({
+    value: Joi.string().required(),
+    title: Joi.string().required(),
+    description: Joi.string(),
+    order: Joi.number().required(),
+  });
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
