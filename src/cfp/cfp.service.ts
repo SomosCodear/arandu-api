@@ -85,7 +85,14 @@ export class CFP {
       },
     });
 
-    if (!fields.length) return;
+    if (!fields.length) {
+      if (field.order !== 1) {
+        field.order = 1;
+        await this.cfpFieldRepository.save(field);
+      }
+
+      return;
+    }
     const lastField = fields[fields.length - 1];
     if (lastField.order === fields.length) {
       const newLastOrder = lastField.order + 1;
@@ -95,9 +102,6 @@ export class CFP {
         await this.cfpFieldRepository.save(field);
         return;
       }
-    } else {
-      field.order = lastField.order;
-      await this.cfpFieldRepository.save(field);
     }
 
     let increment = 0;
