@@ -35,7 +35,7 @@ export class CFP {
   ): Promise<CFPFieldEntity> {
     const field = await this.cfpFieldRepository.findOne({
       where: { id: fieldId },
-      relations: ['cfp'],
+      relations: ['cfp', 'options'],
     });
     if (!field && failWithError) {
       throw new HttpException('Field not found', HttpStatus.NOT_FOUND);
@@ -55,7 +55,11 @@ export class CFP {
     return updated;
   }
   async createField(data: Required<CFPFieldDTO>): Promise<CFPFieldEntity> {
-    const field = await this.cfpFieldRepository.save(data);
+    const newField = await this.cfpFieldRepository.save(data);
+    const field = await this.cfpFieldRepository.findOne({
+      where: { id: newField.id },
+      relations: ['cfp', 'options'],
+    });
     await this.updateFieldOrder(field);
     return field;
   }
