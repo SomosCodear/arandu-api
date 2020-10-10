@@ -40,16 +40,16 @@ Once the variables for the database connection are ready, you can use the DB CLI
 
 ```sh
 yarn cli:dev db --help
-# OR npm run yarn cli:dev db --help
+# OR npm run cli:dev db --help
 ```
 
 There you'll see the commands for entities synchronization and seeding; you should run both.
 
 ```sh
 yarn cli:dev db sync
-# OR npm run yarn cli:dev db sync
+# OR npm run cli:dev db sync
 yarn cli:dev db seed
-# OR npm run yarn cli:dev db seed
+# OR npm run cli:dev db seed
 ```
 
 ### 4. App && Env
