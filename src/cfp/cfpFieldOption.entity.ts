@@ -12,7 +12,7 @@ export class CFPFieldOptionEntity {
   static validationSchema = Joi.object({
     value: Joi.string().required(),
     title: Joi.string().required(),
-    description: Joi.string(),
+    description: Joi.string().allow(''),
     order: Joi.number().required(),
   });
 
