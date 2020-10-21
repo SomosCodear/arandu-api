@@ -1,9 +1,9 @@
 import { registerAs } from '@nestjs/config';
 import { ConnectionOptions } from 'typeorm';
-import { TeamEntity } from 'src/team/team.entity';
-import { CFPEntity } from 'src/cfp/cfp.entity';
-import { CFPFieldOptionEntity } from 'src/cfp/cfpFieldOption.entity';
-import { CFPFieldEntity } from 'src/cfp/cfpField.entity';
+import { TeamEntity } from '../team/team.entity';
+import { CFPEntity } from '../cfp/cfp.entity';
+import { CFPFieldOptionEntity } from '../cfp/cfpFieldOption.entity';
+import { CFPFieldEntity } from '../cfp/cfpField.entity';
 
 export const typeORMConfig = registerAs(
   'typeorm',

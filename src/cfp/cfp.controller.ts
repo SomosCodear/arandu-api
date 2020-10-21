@@ -15,7 +15,6 @@ import { CFPFieldEntity } from './cfpField.entity';
 import { CFPFieldOptionDTO } from './cfpFieldOption.dto';
 import * as Joi from 'joi';
 import { CFPFieldOptionEntity } from './cfpFieldOption.entity';
-import { FileFieldsInterceptor } from '@nestjs/platform-express';
 
 @Controller('cfps')
 export class CFPController {

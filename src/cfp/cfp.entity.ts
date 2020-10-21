@@ -6,7 +6,7 @@ import {
   OneToMany,
   Unique,
 } from 'typeorm';
-import { TeamEntity } from 'src/team/team.entity';
+import { TeamEntity } from '../team/team.entity';
 import { CFPFieldEntity } from './cfpField.entity';
 
 @Entity({

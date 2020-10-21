@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { CFPEntity } from 'src/cfp/cfp.entity';
+import { CFPEntity } from '../cfp/cfp.entity';
 
 @Entity({
   name: 'teams',
