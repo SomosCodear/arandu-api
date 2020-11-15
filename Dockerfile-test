@@ -3,7 +3,7 @@ FROM node:12-alpine
 ADD src /opt
 ADD package.json yarn.lock tsconfig.json tsconfig.build.json nest-cli.json .nvmrc /opt/
 WORKDIR /opt
-RUN yarn install && yarn cache clean
+RUN yarn --frozen-lockfile && yarn cache clean
 RUN yarn build
 
 ENTRYPOINT yarn cli db sync && yarn start:prod
